@@ -1,0 +1,49 @@
+*.pdf
+# Gradle specific files
+.gradle/
+build/
+out/
+
+# Local configuration file (Gradle)
+gradle-local.properties
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Eclipse
+.settings/
+.project
+.classpath
+
+# MacOS specific files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Archive files
+*.zip
+*.tar.gz
+*.tar.bz2
+*.jar
+*.war
+*.ear
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Other IDE or editor files
+.vscode/
+*.swp
+*~
+
+# Windows specific files (if you want to include exclusions across OS)
+Thumbs.db
+ehthumbs.db
+

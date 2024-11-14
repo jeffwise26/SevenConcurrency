@@ -5,11 +5,11 @@ public class Counting {
         class Counter {
             private int count = 0;
 
-            public void increment() {
+            public synchronized void increment() {
                 ++count;
             }
 
-            public int getCount() {
+            public synchronized int getCount() {
                 return count;
             }
         }

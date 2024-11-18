@@ -1,4 +1,4 @@
-package org.example;
+package org.example.download;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

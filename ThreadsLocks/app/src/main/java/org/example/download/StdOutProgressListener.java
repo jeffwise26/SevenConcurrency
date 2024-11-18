@@ -1,4 +1,4 @@
-package org.example;
+package org.example.download;
 
 public class StdOutProgressListener implements ProgressListener {
     private final String name;

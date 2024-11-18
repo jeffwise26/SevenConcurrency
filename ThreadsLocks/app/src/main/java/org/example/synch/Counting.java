@@ -1,4 +1,4 @@
-package org.example;
+package org.example.synch;
 
 public class Counting {
     public static void main(String[] args) throws InterruptedException {

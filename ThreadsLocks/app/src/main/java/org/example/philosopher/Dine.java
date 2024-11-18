@@ -1,4 +1,4 @@
-package org.example;
+package org.example.philosopher;
 
 public class Dine {
     public static void main(String[] args) {

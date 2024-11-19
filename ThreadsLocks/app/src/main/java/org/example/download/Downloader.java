@@ -8,7 +8,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
-public class Downloader {
+public class Downloader extends Thread {
     private InputStream in;
     private OutputStream out;
     private ArrayList<ProgressListener> listeners;
@@ -30,7 +30,7 @@ public class Downloader {
         listeners.remove(listener);
     }
 
-    private void updateProgress(int current) {
+    private void updateProgress(int current) throws InterruptedException {
         ArrayList<ProgressListener> listenersCopy;
         synchronized(this) {
             listenersCopy = (ArrayList<ProgressListener>)listeners.clone();
@@ -53,7 +53,7 @@ public class Downloader {
                 updateProgress(total);
             }
             out.flush();
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             System.out.println(e.getMessage());
         }
     }

@@ -1,13 +1,18 @@
 package org.example.download;
 
-public class StdOutProgressListener implements ProgressListener {
-    private final String name;
+import java.util.Objects;
 
-    StdOutProgressListener(String name) {
+public class StdOutProgressListener extends Thread implements ProgressListener {
+    private final String name;
+    private final int delay;
+
+    StdOutProgressListener(String name, Integer delay) {
         this.name = name;
+        this.delay = Objects.requireNonNullElse(delay, 0);
     }
 
-    public void onProgress(Double current, Double total) {
+    public void onProgress(Double current, Double total) throws InterruptedException {
+        Thread.sleep(delay);
         if (total == 0) {
             System.out.printf("%s current: %.0f%n", name, current);
         } else {

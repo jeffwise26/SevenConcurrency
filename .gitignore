@@ -1,4 +1,7 @@
+# the book itself and example code from book
+code/
 *.pdf
+
 # Gradle specific files
 .gradle/
 build/

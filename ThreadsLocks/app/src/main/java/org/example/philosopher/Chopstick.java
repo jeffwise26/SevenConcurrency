@@ -1,4 +1,4 @@
-package org.example;
+package org.example.philosopher;
 
 public class Chopstick {
     static int globalIndex = 0;

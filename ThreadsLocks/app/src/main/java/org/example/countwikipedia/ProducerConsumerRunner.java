@@ -1,24 +1,29 @@
 package org.example.countwikipedia;
 
 import java.util.HashMap;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.*;
 
 public class ProducerConsumerRunner {
 
     public static void main(String[] args) throws InterruptedException {
         BlockingQueue<Page> queue = new ArrayBlockingQueue<>(100);
         HashMap<String, Integer> count = new HashMap<>();
-        Parser parser = new Parser(queue);
-        Counter counter = new Counter(queue, count);
 
-        Thread t1 = new Thread(parser);
-        Thread t2 = new Thread(counter);
-        t1.start();
-        t2.start();
-        t1.join();
-        queue.put(new Page(null, true));
-        t2.join();
-        System.out.println(count);
+        try (ExecutorService executor = Executors.newCachedThreadPool()) {
+            int MAX_THREADS = 2;
+            for (int i = 0; i < MAX_THREADS; ++i) {
+                executor.execute(new Counter(queue, count));
+            }
+
+            Thread parser = new Thread(new Parser(queue));
+            parser.start();
+            parser.join();
+            for (int i = 0; i < MAX_THREADS; ++i) {
+                queue.put(new Page(null, true));
+            }
+            executor.shutdown();
+            executor.awaitTermination(1L, TimeUnit.MINUTES);
+            System.out.println(count);
+        }
     }
 }

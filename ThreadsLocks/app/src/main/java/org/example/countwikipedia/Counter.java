@@ -2,10 +2,13 @@ package org.example.countwikipedia;
 
 import java.util.HashMap;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Counter implements Runnable {
-    private BlockingQueue<Page> queue;
-    private HashMap<String, Integer> count;
+    private final BlockingQueue<Page> queue;
+    private final HashMap<String, Integer> count;
+    private static final Lock lock = new ReentrantLock();
 
     public Counter(BlockingQueue<Page> queue, HashMap<String, Integer> count) {
         this.queue = queue;
@@ -28,11 +31,15 @@ public class Counter implements Runnable {
                 System.out.println(e.getMessage());
             }
         }
-
     }
 
     public void countWord(String word) {
-        count.merge(word, 1, Integer::sum);
+        lock.lock();
+        try {
+            count.merge(word, 1, Integer::sum);
+        } finally {
+            lock.unlock();
+        }
     }
 
 }

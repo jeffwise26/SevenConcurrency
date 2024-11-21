@@ -1,6 +1,5 @@
 package org.example.countwikipedia;
 
-import java.util.HashMap;
 import java.util.concurrent.*;
 
 public class ProducerConsumerRunner {

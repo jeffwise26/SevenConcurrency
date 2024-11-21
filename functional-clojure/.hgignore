@@ -5,6 +5,11 @@ pom.xml.asc
 *.class
 .gitignore
 .git/**
+.clj-kondo/
+.lein-failures
+.lein-repl-history
+.lsp/
+target/
 
 syntax: regexp
 ^.nrepl-port

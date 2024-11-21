@@ -7,7 +7,7 @@ public class ProducerConsumerRunner {
 
     public static void main(String[] args) throws InterruptedException {
         BlockingQueue<Page> queue = new ArrayBlockingQueue<>(100);
-        HashMap<String, Integer> count = new HashMap<>();
+        ConcurrentHashMap<String, Integer> count = new ConcurrentHashMap<>();
 
         try (ExecutorService executor = Executors.newCachedThreadPool()) {
             int MAX_THREADS = 2;

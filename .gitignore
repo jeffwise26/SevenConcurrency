@@ -7,6 +7,13 @@ code/
 build/
 out/
 
+#clojure
+*.clj-kondo/
+*.lein-failures
+*.lein-repl-history
+*.lsp/
+target/
+
 # Local configuration file (Gradle)
 gradle-local.properties
 

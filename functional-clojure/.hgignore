@@ -1,0 +1,21 @@
+syntax: glob
+pom.xml
+pom.xml.asc
+*.jar
+*.class
+.gitignore
+.git/**
+.clj-kondo/
+.lein-failures
+.lein-repl-history
+.lsp/
+target/
+
+syntax: regexp
+^.nrepl-port
+^.prepl-port
+^.lein-.*
+^target/
+^classes/
+^checkouts/
+profiles.clj

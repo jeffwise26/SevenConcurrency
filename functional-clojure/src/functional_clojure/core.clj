@@ -33,6 +33,20 @@
   ([f coll] (coll-reduce coll f))
   ([f init coll] (coll-reduce coll f init)))
 
+;; take a reducable and transform, return reducer
+(defn make-reducer [reducible transformf]
+  (reify
+    CollReduce
+    (coll-reduce [_ f1] (coll-reduce reducible (transformf f1) (f1)))
+    (coll-reduce [_ f1 init] (coll-reduce reducible (transformf f1) init))))
+
+;; chaining
+(defn my-rmap [mapf reducible]
+  (make-reducer reducible
+                (fn [reducef]
+                  (fn[acc v]
+                  (reducef acc (mapf v))))))
+
 (defn -main
   [& args]
   (println (accum [1,2]))

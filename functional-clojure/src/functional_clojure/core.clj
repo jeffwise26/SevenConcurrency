@@ -3,7 +3,7 @@
   (:require [clojure.core.reducers :as r])
   (:require [functional-clojure.wikicounter :as w])
   (:require [clojure.core.protocols :refer [CollReduce coll-reduce]]
-  [clojure.core.reducers :refer [CollFold coll-fold]]))
+            [clojure.core.reducers :refer [CollFold coll-fold]]))
 
 ;; 1 doesn't quite do tail recursion
 ;; 2 clojure doens't have tail recursion anyways
@@ -38,22 +38,28 @@
   (reify
     CollReduce
     (coll-reduce [_ f1] (coll-reduce reducible (transformf f1) (f1)))
-    (coll-reduce [_ f1 init] (coll-reduce reducible (transformf f1) init))))
+    (coll-reduce [_ f1 init] (coll-reduce reducible (transformf f1) init)))
+  (reify
+    CollFold
+    (coll-fold [_ n combinef reducef] (coll-fold reducible  n combinef (transformf reducef)))))
 
-;; chaining
-(defn my-rmap [mapf reducible]
+(defn my-map [mapf reducible]
   (make-reducer reducible
                 (fn [reducef]
-                  (fn[acc v]
-                  (reducef acc (mapf v))))))
+                  (fn [acc v]
+                    (reducef acc (mapf v))))))
 
-(defn -main
-  [& args]
-  (println (accum [1,2]))
-  (println (accumReduce [1,2]))
-  (println (subReduce [1,2]))
-  (println (parallel-sum [1,2]))
-  (println (w/count-words)))
+;; fold
+(defn my-fold
+  ([reducef coll]
+   (my-fold reducef reducef coll))
+  ([combinef reducef coll]
+   (my-fold 512 combinef reducef coll))
+  ([n combinef reducef coll]
+   (coll-fold coll n combinef reducef)))
 
-
-
+(defn parallel-frequencies [coll]
+  (r/fold
+    (partial merge-with +)
+    (fn [count x] (assoc count x (inc (get count x 0))))
+    coll))
